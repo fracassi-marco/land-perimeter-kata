@@ -1,16 +1,22 @@
 package io.fracassi
 
 fun landPerimeter(rows: Array<String>): String {
-    val world = rows.first().map { asElement(it) }
+    val world: List<List<Element>> = rows.map { row -> row.map { col -> asElement(col) } }
 
-    val perimeter = world.mapIndexed { col, element ->
-        val neighbors = mutableListOf<Element>()
-        if(col != 0)
-            neighbors.add(world[col - 1])
-        if(col != world.size - 1)
-            neighbors.add(world[col + 1])
-        element.addNeighbors(neighbors)
-    }.sumOf { it.perimeter() }
+    val perimeter = world.mapIndexed { rowIndex: Int, row: List<Element> ->
+        row.mapIndexed { colIndex, element ->
+            val neighbors = mutableListOf<Element>()
+            if (colIndex != 0)
+                neighbors.add(world[rowIndex][colIndex - 1])
+            if (colIndex != row.size - 1)
+                neighbors.add(world[rowIndex][colIndex + 1])
+            if (rowIndex != 0)
+                neighbors.add(world[rowIndex - 1][colIndex])
+            if (rowIndex != world.size - 1)
+                neighbors.add(world[rowIndex + 1][colIndex])
+            element.addNeighbors(neighbors)
+        }
+    }.flatten().sumOf { it.perimeter() }
 
     return "Total land perimeter: $perimeter"
 }

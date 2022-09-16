@@ -29,4 +29,9 @@ class LandPerimeterTest {
     fun `1x1 and 1x1 lands in 1x4 world`() {
         assertThat(landPerimeter(arrayOf("OXOX"))).isEqualTo("Total land perimeter: 8")
     }
+
+    @Test
+    fun `2x1 in 2x1 world`() {
+        assertThat(landPerimeter(arrayOf("X", "X"))).isEqualTo("Total land perimeter: 6")
+    }
 }
